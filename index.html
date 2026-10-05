@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rich Minds Jnr • Status</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- BASE STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background 1.5s ease, color 1s ease;
+            color: white;
+            position: relative;
+        }
+
+        /* Floating Cosmic Orbs (Background Decor) */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .orb-2 { width: 400px; height: 400px; bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- MOOD THEMES (Change these in the body tag) --- */
+        
+        /* HAPPY: Neon Sunset */
+        body.mood-happy { background: #0f0c29; background: linear-gradient(to right, #24243e, #302b63, #0f0c29); }
+        body.mood-happy .orb-1 { background: #ff007f; }
+        body.mood-happy .orb-2 { background: #ffb347; }
+        body.mood-happy .glass-card { border-color: rgba(255, 0, 127, 0.3); }
+        body.mood-happy .status-text { color: #ffb347; text-shadow: 0 0 20px rgba(255, 179, 71, 0.5); }
+
+        /* CALM: Deep Ocean */
+        body.mood-calm { background: #0f2027; background: linear-gradient(to right, #203a43, #2c5364, #0f2027); }
+        body.mood-calm .orb-1 { background: #00b4db; }
+        body.mood-calm .orb-2 { background: #0083b0; }
+        body.mood-calm .glass-card { border-color: rgba(0, 180, 219, 0.3); }
+        body.mood-calm .status-text { color: #00b4db; text-shadow: 0 0 20px rgba(0, 180, 219, 0.5); }
+
+        /* STRESSED: Chaotic Inferno */
+        body.mood-stressed { background: #1a0000; background: linear-gradient(to right, #2b0000, #4a0000, #1a0000); }
+        body.mood-stressed .orb-1 { background: #ff0000; animation: pulse 1s infinite alternate; }
+        body.mood-stressed .orb-2 { background: #ff4d4d; animation: pulse 1.5s infinite alternate; }
+        body.mood-stressed .glass-card { border-color: rgba(255, 0, 0, 0.5); animation: shake 0.5s infinite; }
+        body.mood-stressed .status-text { color: #ff4d4d; text-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+
+        @keyframes pulse { 0% { opacity: 0.4; } 100% { opacity: 0.9; } }
+        @keyframes shake { 0% { transform: translate(0, 0); } 25% { transform: translate(2px, -2px); } 50% { transform: translate(-2px, 2px); } 75% { transform: translate(2px, 2px); } 100% { transform: translate(0, 0); } }
+
+        /* SAD: Midnight Rain */
+        body.mood-sad { background: #000000; background: linear-gradient(to right, #0f0f0f, #1a1a1a, #000000); }
+        body.mood-sad .orb-1 { background: #4a4a4a; }
+        body.mood-sad .orb-2 { background: #2b2b2b; }
+        body.mood-sad .glass-card { border-color: rgba(255, 255, 255, 0.1); }
+        body.mood-sad .status-text { color: #888888; text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+
+        /* --- GLASS CARD --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 30px;
+            text-align: center;
+            z-index: 10;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .creator-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .status-text {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            transition: color 0.5s ease, text-shadow 0.5s ease;
+        }
+
+        .status-message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .timestamp {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+<!-- CHANGE THE MOOD HERE: mood-happy, mood-calm, mood-stressed, mood-sad -->
+<body class="mood-happy">
+
+    <!-- Floating Cosmic Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="glass-card">
+        <div class="creator-name">🪐⎞ℝ𝕚𝕔𝕙 𝕄𝕚𝕟𝕕𝕤 𝕁𝕟𝕣⎛?</div>
+        <div class="subtitle">Current State of Mind</div>
+
+        <div class="status-label">I am feeling</div>
+        <!-- CHANGE THE MOOD TEXT HERE -->
+        <div class="status-text">Euphoric</div>
+        
+        <!-- CHANGE YOUR MESSAGE HERE -->
+        <div class="status-message">
+            "The universe is aligning perfectly today. Coding, creating, and vibing on a whole new frequency."
+        </div>
+
+        <div class="timestamp">Last updated: Just now</div>
+    </div>
+
+</body>
+  </html>
